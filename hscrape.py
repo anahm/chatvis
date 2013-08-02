@@ -4,7 +4,7 @@ import json
 
 filename = "Hangouts.json"
 name = str.lower("David Diciurcio")
-stringOfChoice = str.lower("is it bad")
+stringOfChoice = str.lower("casey")
 
 # Starting to compute variables
 fileObj = json.loads(open(filename).read())
