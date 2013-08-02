@@ -25,7 +25,7 @@ def phraseCount(convo):
     return strCounter
 
 # count ALL the words!
-def wordCount(convo, topBlah):
+def wordCount(convo, minWordLen, topBlah):
     totWord = 0
     wordCountArray = {}
 
@@ -55,7 +55,7 @@ def wordCount(convo, topBlah):
 
     topBlah = 10
     for w in newArray:
-        if (topBlah > 0 and len(w[0]) > 15):
+        if (topBlah > 0 and len(w[0]) >= minWordLen):
             print w
             # print wordCountArray[w]
             # print w + ': ' + str(wordCountArray[w])
@@ -100,6 +100,6 @@ print '-----results!------'
 # print strCounter
 # print str((strCounter/float((len(convo)))) * 100) + '%'
 
-wordCount(convo, 10)
+wordCount(convo, 16, 10)
 
 
