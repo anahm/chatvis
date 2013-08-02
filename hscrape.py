@@ -1,5 +1,28 @@
 # This is the beginning of the end.
 
+# Now actually scraping the content...for a specific string
+def phraseCount(convo):
+    strCounter = 0
+    wantNext = False # Generally want line right after since I add the enter key a ton..
+
+    for chat in convo:
+        chat_meat = chat["chat_message"]["message_content"]
+        if ("segment" in chat_meat):
+            chat_meat = chat_meat["segment"]
+            for c in chat_meat:
+                if (c["type"] == "TEXT"):
+                    # Making the string purty
+                    chatText = (c["text"]).encode('utf-8').strip()
+                    if (stringOfChoice in str.lower(chatText)):
+                        wantNext = True
+                        strCounter += 1
+                        print chatText
+                    elif (wantNext):
+                        wantNext = False
+                        print chatText
+    return strCounter
+
+
 import json
 
 filename = "Hangouts.json"
@@ -8,7 +31,6 @@ stringOfChoice = str.lower("casey")
 
 # Starting to compute variables
 fileObj = json.loads(open(filename).read())
-
 
 counter = 1
 convo = None
@@ -32,28 +54,10 @@ for metadata in fileObj:
 
 
 print 'length of convo you are scraping: ' + str(len(convo))
-print '--------'
-
-# Now actually scraping the content...
-strCounter = 0
-wantNext = False # Generally want line right after since I add the enter key a ton..
-
-for chat in convo:
-    chat_meat = chat["chat_message"]["message_content"]
-    if ("segment" in chat_meat):
-        chat_meat = chat_meat["segment"]
-        for c in chat_meat:
-            if (c["type"] == "TEXT"):
-                # Making the string purty
-                chatText = (c["text"]).encode('utf-8').strip()
-                if (stringOfChoice in str.lower(chatText)):
-                    wantNext = True
-                    strCounter += 1
-                    print chatText
-                elif (wantNext):
-                    wantNext = False
-                    print chatText
 
 print '-----results!------'
+strCounter = phraseCount(convo)
 print strCounter
 print str((strCounter/float((len(convo)))) * 100) + '%'
+
+
