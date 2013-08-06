@@ -33,9 +33,11 @@ $(document).ready(function() {
                 + ': ' + resp.strCounter + '</p>');
 
             $('<div id="outputList">').appendTo('#output');
-            $.each(resp.strList, function(index, item) {
-                $('div#outputList').append('<p>' + item + '</p>');
-            })
+            if (resp.strList) {
+                $.each(resp.strList, function(index, item) {
+                    $('div#outputList').append('<p>' + item + '</p>');
+                })
+            }
         });
 
         request.fail(function (jqXHR, textStatus, errorThrown) {

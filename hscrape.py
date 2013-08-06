@@ -13,15 +13,18 @@ def phraseCount(convo, stringOfChoice):
             chat_meat = chat_meat["segment"]
             for c in chat_meat:
                 if (c["type"] == "TEXT"):
-                    # Making the string purty
-                    chatText = (c["text"]).encode('utf-8').strip()
-                    if (stringOfChoice in str.lower(chatText)):
-                        wantNext = True
-                        strCounter += 1
-                        print chatText
-                    elif (wantNext):
-                        wantNext = False
-                        print chatText
+                    try:
+                        chatText = (c["text"]).decode('utf-8').strip()
+                        if (stringOfChoice in chatText.lower()):
+                            wantNext = True
+                            strCounter += 1
+                            print chatText
+                        elif (wantNext):
+                            wantNext = False
+                            print chatText
+                    except UnicodeEncodeError:
+                        pass
+
     return strCounter
 
 # count ALL the words!

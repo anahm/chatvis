@@ -23,10 +23,10 @@
 <form action="#" method="post" name="chatInfo">
     {{form.hidden_tag()}}
     <p>
-        Name the Other:<br>
-        {{ form.otherName(size=80) }}
-        What to Search:<br>
-        {[ form.searchText(size=120) }}
+        Name the Other:
+        {{ form.otherName(size=80) }} <br>
+        What to Search:
+        {{ form.searchText(size=120) }} <br>
     </p>
     <p><input type="submit" value="Get It!"></p>
 </form>
