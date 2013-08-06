@@ -1,8 +1,11 @@
 from flask import Flask
-from flask import jsonify, render_template, request
-app = Flask(__name__)
 
-from flask.ext.wtf import Form, TextField, Required
+app = Flask(__name__)
+app.config.from_object('config')
+
+from flask import jsonify, render_template, request
+
+from flask.ext.wtf import Form, TextField, Required, validators
 
 from hscrape import *
 
@@ -11,7 +14,7 @@ def hello_world():
     return 'sup!'
 
 
-def chatvisForm():
+class chatvisForm(Form):
     otherName = TextField('otherName', validators = [Required()])
     searchText = TextField('searchText', validators = [Required()])
 
@@ -28,12 +31,12 @@ def chatvisFormProcess():
 
     return jsonify(convoLen = len(convo), strCounter = numStr)
 
-@app.route('/chatvis')
+@app.route('/chatvis', methods=['GET', 'POST'])
 def chatvis():
-    form = chatvisForm()
-    if (form):
-        render_template('chatvis.html', form = form)
+    form = chatvisForm(request.form)
+    render_template('chatvis.html',
+            title="blargl",
+            form=form)
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    app.run(debug = True)

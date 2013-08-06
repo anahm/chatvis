@@ -1,16 +1,27 @@
 <!doctype html>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/static/jquery.js">\x3C/script>')</script>
-<script type="text/javascript" src="/static/formInput.js"></script>
-
+<script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+<script type=text/javascript src="{{url_for('static', filename='formInput.js') }}"></script>
 <title>gchat . analyzed</title>
 
 <h1>gchatchart</h1>
 
 
+<hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+
 <form action="#" method="post" name="chatInfo">
-    {{ form.hidden_tag }}
+    {{form.hidden_tag()}}
     <p>
         Name the Other:<br>
         {{ form.otherName(size=80) }}
