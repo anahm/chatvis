@@ -1,0 +1,25 @@
+<!doctype html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/static/jquery.js">\x3C/script>')</script>
+<script type="text/javascript" src="/static/formInput.js"></script>
+
+<title>gchat . analyzed</title>
+
+<h1>gchatchart</h1>
+
+
+<form action="#" method="post" name="chatInfo">
+    {{ form.hidden_tag() }}
+    <p>
+        Name the Other:<br>
+        {{ form.otherName(size=80) }}
+        What to Search:<br>
+        {[ form.searchText(size=120) }}
+    </p>
+    <p><input type="submit" value="Get It!"></p>
+</form>
+
+
+<div id="output">
+</div>

@@ -3,7 +3,7 @@ import json
 from operator import itemgetter
 
 # Now actually scraping the content...for a specific string
-def phraseCount(convo):
+def phraseCount(convo, stringOfChoice):
     strCounter = 0
     wantNext = False # Generally want line right after since I add the enter key a ton..
 
@@ -65,41 +65,41 @@ def wordCount(convo, minWordLen, topBlah):
 
 
 # beginning of other silly things
-filename = "Hangouts.json"
-name = str.lower("David Diciurcio")
-stringOfChoice = str.lower("is it bad")
+def getAliFile(name):
+    filename = "Hangouts.json"
+    name = name.lower()
 
-# Starting to compute variables
-fileObj = json.loads(open(filename).read())
+    # Starting to compute variables
+    fileObj = json.loads(open(filename).read())
 
-counter = 1
-convo = None
+    counter = 1
+    convoResult = None
 
-for metadata in fileObj:
-    if (metadata == 'conversation_state'):
-        for convo in fileObj[metadata]:
-            convodata = convo["conversation_state"]
-            participants = convodata["conversation"]["participant_data"]
-            fallbackNameSet = False
-            for p in participants:
-                if ("fallback_name" in p and str.lower(str(p["fallback_name"])) == name):
-                    # Cool beans, finally found the convo with person X
-                    fallbackNameSet = True
+    for metadata in fileObj:
+        if (metadata == 'conversation_state'):
+            for convo in fileObj[metadata]:
+                convodata = convo["conversation_state"]
+                participants = convodata["conversation"]["participant_data"]
+                fallbackNameSet = False
+                for p in participants:
+                    if ("fallback_name" in p and str.lower(str(p["fallback_name"])) == name):
+                        # Cool beans, finally found the convo with person X
+                        fallbackNameSet = True
+                        break
+                if (fallbackNameSet):
+                    print p["fallback_name"]
+                    convoResult = convodata["event"]
                     break
-            if (fallbackNameSet):
-                print p["fallback_name"]
-                convo = convodata["event"]
-                break
-            counter += 1
+                counter += 1
 
+    return convoResult
 
-print 'length of convo you are scraping: ' + str(len(convo))
+# print 'length of convo you are scraping: ' + str(len(convo))
 
-print '-----results!------'
 # strCounter = phraseCount(convo)
 # print strCounter
 # print str((strCounter/float((len(convo)))) * 100) + '%'
 
-wordCount(convo, 16, 10)
+# wordCount(convo, 16, 10)
 
 
